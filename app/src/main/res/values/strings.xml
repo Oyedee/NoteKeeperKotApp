@@ -12,4 +12,6 @@
     <string name="select_course">select course</string>
     <string name="note_title">Note Title</string>
     <string name="note_text">Note Text</string>
+    <string name="title_activity_note_list">NoteListActivity</string>
+    <string name="add_button">add button</string>
 </resources>
