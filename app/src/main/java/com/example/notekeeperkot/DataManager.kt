@@ -1,6 +1,7 @@
 package com.example.notekeeperkot
 
-class DataManager {
+//making our DataManager class a singleton by replacing the class keyword to 'object' keyword in our class declaration
+object DataManager {
     val courses = HashMap<String, CourseInfo>() //list of courses
     val notes = ArrayList<NoteInfo>() //list of notes
 
