@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import com.example.notekeeperkot.databinding.ActivityMainBinding
 import com.example.notekeeperkot.databinding.ContentMainBinding
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var binding1: ContentMainBinding
+
+
+    //let's create a private mutable property for our note position
+    //which will be received from the intent passed from the NoteListActivity
+    private var notePosition = POSITION_NOT_SET // set it's initial value to note position not set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +42,41 @@ class MainActivity : AppCompatActivity() {
             DataManager.courses.values.toList()
         )
         adapterCourses.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        val spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+//        spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+        var spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
         spinnerCourses.adapter = adapterCourses
+
+        //now let's get the note position from the intent that start this activity
+        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)//return position not set when no position is passed in the intent
+
+        //Let's check to see that our notePosition is not set to POSITION_NOT_SET
+        //We will do that using and if statement
+        if (notePosition != POSITION_NOT_SET) {
+            displayNote()
+        }
 
 //        binding.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
+    }
+
+    private fun displayNote() {
+        //let's get the note that corresponds to the passed notePosition
+        var note = DataManager.notes[notePosition] //this gives us our note
+        //now let's display the note value on the views in our MainActivity
+        val textNoteTitle = findViewById<EditText>(R.id.text_note_title)
+        val textNoteText = findViewById<EditText>(R.id.text_note_text)
+
+        textNoteTitle.setText(note.title) //displays the title
+        textNoteText.setText(note.text) //displays the note
+
+        //now let's display the appropriate course for this note
+        //we can do that by selecting the appropriate course from the spinner
+        var coursePosition = DataManager.courses.values.indexOf(note.course)
+        var spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+        spinnerCourses.setSelection(coursePosition)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

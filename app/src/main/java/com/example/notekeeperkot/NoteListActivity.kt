@@ -37,6 +37,14 @@ class NoteListActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_1,
             DataManager.notes
         )
+
+        //let's implement a click listener for our listView
+        //this will execute when the user selects a note item from the listView
+        listNotes.setOnItemClickListener{parent, view, position, id ->
+            val activityIntent = Intent(this, MainActivity::class.java)
+            activityIntent.putExtra(EXTRA_NOTE_POSITION, position)
+            startActivity(activityIntent)
+        }
     }
 
 
