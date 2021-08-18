@@ -9,6 +9,7 @@ object DataManager {
     // when an instance of our DataManager class is called.
     init {
         initializeCourses()
+        initializeNotes()
     }
 
     private fun initializeCourses() {
@@ -23,5 +24,11 @@ object DataManager {
 
         course = CourseInfo("kotlin_core", "Kotlin Fundamentals: The Core Platform")
         courses.set(course.courseId, course)
+    }
+
+    private fun initializeNotes() {
+        var course = CourseInfo("android_intents", "Android Programming with intents")
+        var note = NoteInfo(course, "Android Programming with intents", "Make your app robust by linking with multiple activities")
+        notes.add(note)
     }
 }
