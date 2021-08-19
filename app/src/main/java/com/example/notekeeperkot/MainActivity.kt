@@ -1,12 +1,7 @@
 package com.example.notekeeperkot
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -47,7 +42,9 @@ class MainActivity : AppCompatActivity() {
         spinnerCourses.adapter = adapterCourses
 
         //now let's get the note position from the intent that start this activity
-        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)//return position not set when no position is passed in the intent
+        //in addition, let's set the notePosition to our onSaveInstance bundle
+        notePosition = savedInstanceState?.getInt(NOTE_POSITION, notePosition) ?: // get bundle from onSaveInstance
+            intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)//return position not set when no position is passed in the intent
 
         //Let's check to see that our notePosition is not set to POSITION_NOT_SET
         //We will do that using and if statement
@@ -66,6 +63,13 @@ class MainActivity : AppCompatActivity() {
                .setAction("Action", null).show()
                 }
  */
+    }
+
+    //Storing note position as part of our activity instance state. This will prevent our activity from losing the
+    //note position data when the activity is destroyed
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(NOTE_POSITION, notePosition)//we pass our bundle the same way we pass intent extras
     }
 
     private fun displayNote() {

@@ -1,6 +1,6 @@
 package com.example.notekeeperkot
 
-const val EXTRA_NOTE_POSITION = "EXTRA_NOTE_POSITION"
+const val NOTE_POSITION = "EXTRA_NOTE_POSITION"
 
 //we need a constant to identify whether a not position was passed or not
 //let's create a constant to identify whether the position is not set
