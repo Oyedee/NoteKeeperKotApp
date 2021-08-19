@@ -53,12 +53,19 @@ class MainActivity : AppCompatActivity() {
         //We will do that using and if statement
         if (notePosition != POSITION_NOT_SET) {
             displayNote()
+        } else {
+            //let's add the option to create a new note in our DataManager or DataStore
+            //which is an empty note
+            DataManager.notes.add(NoteInfo())
+            //set mainActivity class notePosition property to the lastIndex of the DataManager's notes collection
+            notePosition = DataManager.notes.lastIndex
         }
 
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+/*       binding.fab.setOnClickListener { view ->
+           Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+               .setAction("Action", null).show()
+                }
+ */
     }
 
     private fun displayNote() {
