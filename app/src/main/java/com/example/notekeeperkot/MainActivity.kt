@@ -104,5 +104,15 @@ class MainActivity : AppCompatActivity() {
         ++notePosition
         //then we display the incremented note
         displayNote()
+        invalidateOptionsMenu() //schedules a call to the onPrepareOptionsMenu
+    }
+
+    //let's change the menu item for our Next action when the user gets to the last note
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        //let's add an if statement to check if our note position is at the last index
+        if (notePosition >= DataManager.notes.lastIndex) {
+            val menuItem = menu.findItem(R.id.action_next)
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 }
