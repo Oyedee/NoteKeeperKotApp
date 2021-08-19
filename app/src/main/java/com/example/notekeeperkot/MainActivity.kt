@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         )
         adapterCourses.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 //        spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
-        var spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+        val spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
         spinnerCourses.adapter = adapterCourses
 
         //now let's get the note position from the intent that start this activity
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         //now let's display the appropriate course for this note
         //we can do that by selecting the appropriate course from the spinner
         var coursePosition = DataManager.courses.values.indexOf(note.course)
-        var spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+        val spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
         spinnerCourses.setSelection(coursePosition)
 
     }
@@ -120,5 +120,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    //Let's add a save capability to our Activity when the user makes changes to the note
+    override fun onPause() {
+        super.onPause()
+        saveNote() //save note function
+    }
+
+    private fun saveNote() {
+        //let's save the content of the note from the screen into our DataManager
+        val note = DataManager.notes[notePosition] //get note from current note position
+        val spinnerCourses = findViewById<Spinner>(R.id.spinner_courses)
+        val textNoteTitle = findViewById<EditText>(R.id.text_note_title)
+        val textNoteText = findViewById<EditText>(R.id.text_note_text)
+        note.title = textNoteTitle.text.toString()//save the content of title to the DataManager
+        note.text = textNoteText.text.toString()//save the content of text to the DataManager
+        note.course = spinnerCourses.selectedItem as CourseInfo //save the content of the spinner into the DataManager
     }
 }
