@@ -90,8 +90,19 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> true // we need to always return true for any menu item we are handling
+            R.id.action_next -> {
+                moveNext() //this func will implement moving to the next note
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun moveNext() {
+        //first we need to increment our note position
+        ++notePosition
+        //then we display the incremented note
+        displayNote()
     }
 }
