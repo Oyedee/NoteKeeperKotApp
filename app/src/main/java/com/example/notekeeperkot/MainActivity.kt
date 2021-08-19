@@ -111,7 +111,13 @@ class MainActivity : AppCompatActivity() {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         //let's add an if statement to check if our note position is at the last index
         if (notePosition >= DataManager.notes.lastIndex) {
-            val menuItem = menu.findItem(R.id.action_next)
+            //find the menu item we want to make changes to
+            val menuItem = menu?.findItem(R.id.action_next) //we are accessing our menu using the safe call operator
+            //now let's use our menuItem in a null safe way
+            if (menuItem != null) {
+                menuItem.icon = getDrawable(R.drawable.ic_baseline_block_24) //change menu item icon for the 'Next' action
+                menuItem.isEnabled = false //disable the menuItem
+            }
         }
         return super.onPrepareOptionsMenu(menu)
     }
